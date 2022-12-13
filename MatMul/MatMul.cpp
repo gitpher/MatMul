@@ -1,6 +1,8 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
+
 
 /*
 1. 명령행 인자								(성공)
@@ -49,20 +51,39 @@ int main(int argc, char* argv[])
 	int Bk = matrix.Bk;
 	int Bn = matrix.Bn;
 
-	/*
-	왜 내가 가져온 matrix로 배열을 만들 수 없을까? 왜 상수가 아니면 배열의 크기를 초기화할 수 없을까?
-	*/
+	int A[2][2];
+	int B[2][2];
 
-	char ch;
+	//왜 내가 가져온 matrix로 배열을 만들 수 없을까? 왜 상수가 아니면 배열의 크기를 초기화할 수 없을까?
+
+	char buf[512] = { 0 };
 	puts("A = ");
-	while ((ch = fgetc(fpA)) != EOF)
+
+	char* rst = NULL;
+	char* tok = strtok_s(buf, " ", &rst);
+	for (int i = 0; i < Ak; i++)
 	{
-		putchar(ch);
+		fgets(buf, sizeof(buf), fpA);
+		for (int j = 0; j < Am; j++)
+		{
+			A[Am][Ak] = atoi(tok);
+			tok = strtok_s(NULL, " ", &rst);
+		}
+		memset(buf, 0, sizeof(buf));
 	}
+
+	printf("%i\n", A[0][0]);
+	printf("%i\n", A[0][1]);
+	printf("%i\n", A[1][0]);
+	printf("%i\n", A[1][1]);
+		
+
 	puts("\nB = ");
-	while ((ch = fgetc(fpB)) != EOF)
+	while (fgets(buf, sizeof(buf), fpB))
 	{
-		putchar(ch);
+		
+		// TODO: 미리 만들어진 배열에 삽입
+
 	}
 	// TODO: 행렬곱 연산
 	puts("\nAB = ");
