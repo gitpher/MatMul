@@ -48,18 +48,22 @@ int main(int argc, char* argv[])
 	int Bk = matrix.Bk;
 	int Bn = matrix.Bn;
 
-	printf("%i\n", Am);
-	printf("%i\n", Ak);
-	printf("%i\n", Bk);
-	printf("%i\n", Bn);
+	/*
+	왜 내가 가져온 matrix로 배열을 만들 수 없을까? 왜 상수가 아니면 배열의 크기를 초기화할 수 없을까?
+	*/
 
-	
-
-	// TODO: 항렬곱
-	// 2번째 
-	
-
-
+	char ch;
+	puts("A = ");
+	while ((ch = fgetc(fpA)) != EOF)
+	{
+		putchar(ch);
+	}
+	puts("\nB = ");
+	while ((ch = fgetc(fpB)) != EOF)
+	{
+		putchar(ch);
+	}
+	puts("\nAB = ");
 
 	printf("\n\t%i OUT OF %i FILE(S) CLOSED SUCCESSFULLY\n", _fcloseall(), 2);
 	return 0;
