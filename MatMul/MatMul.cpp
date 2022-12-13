@@ -46,38 +46,29 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	int Am = matrix.Am; // Am 라인 만큼 읽고
-	int Ak = matrix.Ak; // 
+	int Am = matrix.Am; // Am 라인 만큼 읽고 [Am][]
+	int Ak = matrix.Ak; // 한 라인당 Ak 번 만큼 넣고 [][Ak]
 	int Bk = matrix.Bk;
 	int Bn = matrix.Bn;
 
 	int A[2][2];
-	int B[2][2];
+	int B[2][2] = {0};
 
 	//왜 내가 가져온 matrix로 배열을 만들 수 없을까? 왜 상수가 아니면 배열의 크기를 초기화할 수 없을까?
 
 	char buf[512] = { 0 };
 	puts("A = ");
-
-	char* rst = NULL;
-	char* tok = strtok_s(buf, " ", &rst);
-	for (int i = 0; i < Ak; i++)
+	for (int i = 0; i < Am; i++) // Am만큼 읽기 --> 2번
 	{
-		fgets(buf, sizeof(buf), fpA);
-		for (int j = 0; j < Am; j++)
+		fgets(buf, sizeof(buf), fpA); // 읽기
+		char* rst = NULL;
+		char* tok = strtok_s(buf, " ", &rst);
+		for (int j = 0; j < Ak; j++) // Ak번 넣기
 		{
-			A[Am][Ak] = atoi(tok);
+			A[i][j] = atoi(tok);
 			tok = strtok_s(NULL, " ", &rst);
 		}
-		memset(buf, 0, sizeof(buf));
 	}
-
-	printf("%i\n", A[0][0]);
-	printf("%i\n", A[0][1]);
-	printf("%i\n", A[1][0]);
-	printf("%i\n", A[1][1]);
-		
-
 	puts("\nB = ");
 	while (fgets(buf, sizeof(buf), fpB))
 	{
@@ -153,3 +144,6 @@ void closeFiles()
 {
 	printf("\n\t%i OUT OF %i FILE(S) CLOSED\n", _fcloseall(), 2);
 }
+
+// 왜 [512]만큼의 크기인지 해명
+// _fcloseall() 이 어떤 함수인지 
