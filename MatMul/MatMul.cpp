@@ -9,7 +9,7 @@
 2. .exe 파일									(성공)
 3. 파일 단순 읽기 w/ fopen_s					(성공)
 4-1. 파일 자체 유효성 검사					(성공)
-4-2. 파일 내용 원하는 형태로 가공
+4-2. 파일 내용 원하는 형태로 가공				(성공)
 4-3. 파일 내용, 행열곱 가능 여부 유효성 검사	(성공)
 5. 행렬곱 알고리즘
 6. 파일 닫기 w/ _fcloseall()					(성공)
@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
 	int Bk = matrix.Bk;
 	int Bn = matrix.Bn;
 
+	// 임의로 만든 배열
 	int A[2][2];
 	int B[2][2] = {0};
 
@@ -58,26 +59,43 @@ int main(int argc, char* argv[])
 
 	char buf[512] = { 0 };
 	puts("A = ");
-	for (int i = 0; i < Am; i++) // Am만큼 읽기 --> 2번
+	for (int i = 0; i < Am; i++)
 	{
-		fgets(buf, sizeof(buf), fpA); // 읽기
+		fgets(buf, sizeof(buf), fpA); 
+		printf("%s", buf);
 		char* rst = NULL;
 		char* tok = strtok_s(buf, " ", &rst);
-		for (int j = 0; j < Ak; j++) // Ak번 넣기
+		for (int j = 0; j < Ak; j++)
 		{
 			A[i][j] = atoi(tok);
 			tok = strtok_s(NULL, " ", &rst);
 		}
 	}
+	memset(buf, 0, sizeof(buf));
 	puts("\nB = ");
-	while (fgets(buf, sizeof(buf), fpB))
+	for (int i = 0; i < Bk; i++)
 	{
-		
-		// TODO: 미리 만들어진 배열에 삽입
-
+		fgets(buf, sizeof(buf), fpB);
+		printf("%s", buf);
+		char* rst = NULL;
+		char* tok = strtok_s(buf, " ", &rst);
+		for (int j = 0; j < Bn; j++)
+		{
+			B[i][j] = atoi(tok);
+			tok = strtok_s(NULL, " ", &rst);
+		}
 	}
-	// TODO: 행렬곱 연산
+	// A와 B배열 출력
+	printf("\n%i\n", A[0][0]);
+	printf("%i\n", A[0][1]);
+	printf("%i\n", A[1][0]);
+	printf("%i\n", A[1][1]);
+	printf("%i\n", B[0][0]);
+	printf("%i\n", B[0][1]);
+	printf("%i\n", B[1][0]);
+	printf("%i\n", B[1][1]);
 	puts("\nAB = ");
+	// TODO: AB 계산
 	// TODO: AB 출력
 
 	closeFiles();
