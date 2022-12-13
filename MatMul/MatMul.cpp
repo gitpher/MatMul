@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	int Am = matrix.Am;
-	int Ak = matrix.Ak;
+	int Am = matrix.Am; // Am 라인 만큼 읽고
+	int Ak = matrix.Ak; // 
 	int Bk = matrix.Bk;
 	int Bn = matrix.Bn;
 
