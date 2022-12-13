@@ -24,6 +24,7 @@ typedef struct Matrix
 } Matrix;
 bool fvalidation(FILE* fpA, FILE* fpB);
 Matrix matmulable(FILE* fpA, FILE* fpB);
+void closeFiles();
 
 int main(int argc, char* argv[])
 {
@@ -33,13 +34,13 @@ int main(int argc, char* argv[])
 
 	if (!fvalidation(fpA, fpB))
 	{
-		_fcloseall();
+		closeFiles();
 		return 1;
 	}
 	Matrix matrix = matmulable(fpA, fpB);
 	if (matrix.init == false)
 	{
-		_fcloseall();
+		closeFiles();
 		return 1;
 	}
 
@@ -63,9 +64,11 @@ int main(int argc, char* argv[])
 	{
 		putchar(ch);
 	}
+	// TODO: 행렬곱 연산
 	puts("\nAB = ");
+	// TODO: AB 출력
 
-	printf("\n\t%i OUT OF %i FILE(S) CLOSED SUCCESSFULLY\n", _fcloseall(), 2);
+	closeFiles();
 	return 0;
 }
 
@@ -125,3 +128,7 @@ Matrix matmulable(FILE* const fpA, FILE* const fpB)
 	}
 }
 
+void closeFiles()
+{
+	printf("\n\t%i OUT OF %i FILE(S) CLOSED\n", _fcloseall(), 2);
+}
