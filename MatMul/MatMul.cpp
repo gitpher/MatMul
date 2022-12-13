@@ -11,10 +11,18 @@
 4-1. 파일 자체 유효성 검사					(성공)
 4-2. 파일 내용 원하는 형태로 가공				(성공)
 4-3. 파일 내용, 행열곱 가능 여부 유효성 검사	(성공)
-5. 행렬곱 알고리즘
+5. 행렬곱 알고리즘							
 6. 파일 닫기 w/ _fcloseall()					(성공)
 7. 리팩터링
 */
+
+/*
+12/13 할 것
+1. matrix 리턴한 걸로 배열 만들기 (또는) 다른 방법을 강구할 것
+2. 행열곱 알고리즘 완성
+3. 리팩터링
+*/
+
 
 typedef struct Matrix
 {
@@ -53,11 +61,12 @@ int main(int argc, char* argv[])
 
 	// 임의로 만든 배열
 	int A[2][2];
-	int B[2][2] = {0};
+	int B[2][2];
 
 	//왜 내가 가져온 matrix로 배열을 만들 수 없을까? 왜 상수가 아니면 배열의 크기를 초기화할 수 없을까?
 
 	char buf[512] = { 0 };
+	// 나중에 이거 출력 하는 거 리팩터링
 	puts("A = ");
 	for (int i = 0; i < Am; i++)
 	{
@@ -85,17 +94,9 @@ int main(int argc, char* argv[])
 			tok = strtok_s(NULL, " ", &rst);
 		}
 	}
-	// A와 B배열 출력
-	printf("\n%i\n", A[0][0]);
-	printf("%i\n", A[0][1]);
-	printf("%i\n", A[1][0]);
-	printf("%i\n", A[1][1]);
-	printf("%i\n", B[0][0]);
-	printf("%i\n", B[0][1]);
-	printf("%i\n", B[1][0]);
-	printf("%i\n", B[1][1]);
-	puts("\nAB = ");
 	// TODO: AB 계산
+	
+	
 	// TODO: AB 출력
 
 	closeFiles();
