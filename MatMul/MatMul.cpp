@@ -89,29 +89,38 @@ int main(int argc, char* argv[])
 			tok = strtok_s(NULL, " ", &rst);
 		}
 	}
-	// TODO: AB 계산
-	for (int m = 0; m < ?; m++) 
+	// TODO: AB 계산 
+	// 변수: m, n, k
+	for (int m = 0; m < Am; m++) // 2번
 	{
 		//
-		for (int k = 0; k < ? ; k++) // A랑 C
+		for (int n = 0; n < Bn; n++) // 2번
 		{
-			// 
-			int bVal;
-			for (int n = 0; n < ? ; n++) // B
+			// AB
+			for (int k = 0; k < Ak; k++) // 2번
 			{
 				// AB에 삽입
-				AB[][] += A[i][j] * B[j][i];
+				// 1라운드: m=0 n=0 k=0
+				// 2라운드: m=0 n=0 k=1 // k가 다 끝나면
+				// 3라운드: m=0 n=1 k=0
+				// 4라운드: m=0 n=1 k=1 // n이 다 끝나면
+				// 5라운드: m=1 n=0 k=0
+				// 6라운드: m=1 n=0 k=1 
+				// 7라운드: m=1 n=1 k=0
+				// 8라운드: m=1 n=1 k=1 
+
+				AB[m][n] += A[m][k] * B[k][n];
+				// 0  0       0  0      0  0 
+				//            0  1      1  0         
+				// 0  1       0  0      0  1 
+				//            0  1      1  1      
+				// 1  0       1  0      0  0 
+				//            1  1      1  0      
+				// 1  1       1  0      0  1 
+				//            1  1      1  1      
 			}
-			//
-			A[m][k];
-			// 0 0 
-			// 0 1
-			// 1 0
-			// 1 1
 		}
-		//
 	}
-	// 변수 만들어서 빠져나와서 할 수 있음
 	puts("\nAB = ");
 	for (int i = 0; i < Am; i++)
 	{
