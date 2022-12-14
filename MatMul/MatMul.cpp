@@ -15,8 +15,16 @@
 5-2. 행렬곱한 결과 출력						(성공)
 6. 파일 닫기 w/ _fcloseall()					(성공)
 7. 리팩터링
+  - Matrix에 init 없애기
+  - 2차원 동적 배열을 선언하고 해제하기
+  - 명령행 인자로 텍스트 파일 몇 개가 들어오든 다 되게 하기
+       - 고려사항: _fcloseall() , 뒤 2 없애기 배열 길이로 바꾸기
 */
 
+int rt(int n) 
+{
+	return n;
+}
 
 typedef struct Matrix
 {
@@ -86,34 +94,13 @@ int main(int argc, char* argv[])
 			tok = strtok_s(NULL, " ", &rst);
 		}
 	}
-	// TODO: AB 계산 
-	// 변수: m, n, k
-	for (int m = 0; m < Am; m++) // 2번
+	for (int m = 0; m < Am; m++)
 	{
-		for (int n = 0; n < Bn; n++) // 2번
+		for (int n = 0; n < Bn; n++)
 		{
-			for (int k = 0; k < Ak; k++) // 2번
+			for (int k = 0; k < Ak; k++) 
 			{
-				// AB에 삽입
-				// 1라운드: m=0 n=0 k=0
-				// 2라운드: m=0 n=0 k=1 // k가 다 끝나면
-				// 3라운드: m=0 n=1 k=0
-				// 4라운드: m=0 n=1 k=1 // n이 다 끝나면
-				// 
-				// 5라운드: m=1 n=0 k=0
-				// 6라운드: m=1 n=0 k=1 
-				// 7라운드: m=1 n=1 k=0
-				// 8라운드: m=1 n=1 k=1 
-
-				AB[m][n] += A[m][k] * B[k][n];
-				// 0  0       0  0      0  0 
-				//            0  1      1  0         
-				// 0  1       0  0      0  1 
-				//            0  1      1  1      
-				// 1  0       1  0      0  0 
-				//            1  1      1  0      
-				// 1  1       1  0      0  1 
-				//            1  1      1  1      
+				AB[m][n] += A[m][k] * B[k][n]; 
 			}
 		}
 	}
