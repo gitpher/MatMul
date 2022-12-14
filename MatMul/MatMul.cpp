@@ -11,7 +11,7 @@
 4-1. 파일 자체 유효성 검사					(성공)
 4-2. 파일 내용 원하는 형태로 가공				(성공)
 4-3. 파일 내용, 행열곱 가능 여부 유효성 검사	(성공)
-5-1. 행렬곱 알고리즘 계산
+5-1. 행렬곱 알고리즘 계산						(성공)
 5-2. 행렬곱한 결과 출력						(성공)
 6. 파일 닫기 w/ _fcloseall()					(성공)
 7. 리팩터링
@@ -48,20 +48,17 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	int Am = matrix.Am; // Am 라인 만큼 읽고 [Am][]
-	int Ak = matrix.Ak; // 한 라인당 Ak 번 만큼 넣고 [][Ak]
-	int Bk = matrix.Bk;
-	int Bn = matrix.Bn;
+	const int Am = matrix.Am; 
+	const int Ak = matrix.Ak; 
+	const int Bk = matrix.Bk;
+	const int Bn = matrix.Bn;
 
 	// 임의로 만든 배열
-	int A[2][2] = {0}; // Am x Ak
-	int B[2][2] = {0}; // Bk x Bn
-	int AB[2][2] = {0}; // Am x Bn
-
-	//왜 내가 가져온 matrix로 배열을 만들 수 없을까? 왜 상수가 아니면 배열의 크기를 초기화할 수 없을까?
+	int A[100][100] = {0}; // Am x Ak
+	int B[100][100] = {0}; // Bk x Bn
+	int AB[100][100] = {0}; // Am x Bn
 
 	char buf[512] = { 0 };
-	// 나중에 이거 출력 하는 거 리팩터링
 	puts("A = ");
 	for (int i = 0; i < Am; i++)
 	{
@@ -93,10 +90,8 @@ int main(int argc, char* argv[])
 	// 변수: m, n, k
 	for (int m = 0; m < Am; m++) // 2번
 	{
-		//
 		for (int n = 0; n < Bn; n++) // 2번
 		{
-			// AB
 			for (int k = 0; k < Ak; k++) // 2번
 			{
 				// AB에 삽입
@@ -104,6 +99,7 @@ int main(int argc, char* argv[])
 				// 2라운드: m=0 n=0 k=1 // k가 다 끝나면
 				// 3라운드: m=0 n=1 k=0
 				// 4라운드: m=0 n=1 k=1 // n이 다 끝나면
+				// 
 				// 5라운드: m=1 n=0 k=0
 				// 6라운드: m=1 n=0 k=1 
 				// 7라운드: m=1 n=1 k=0
@@ -124,12 +120,12 @@ int main(int argc, char* argv[])
 	puts("\nAB = ");
 	for (int i = 0; i < Am; i++)
 	{
-		for (int j = 0; j < Bn; i++)
+		for (int j = 0; j < Bn; j++)
 		{
 			printf("%i ", AB[i][j]);
 		}
-		puts("\n");
-	}
+		printf("\n");
+	}	
 
 	closeFiles();
 	return 0;
@@ -197,4 +193,8 @@ void closeFiles()
 }
 
 // 왜 [512]만큼의 크기인지 해명
-// _fcloseall() 이 어떤 함수인지 
+// _fcloseall() 이 어떤 함수인지 왜 썼는지 해명
+// fopen_s 작동방식 해명 그리고 fopen과 비교
+// strtok()_s 쓰는 방식 해명
+// const의 위치 왜 포인터로 넘겼는지 해명 // const int*와 int* const의 차이 그리고 const int와 int const의 차이
+// 왜 Matrix struct를 썼는지 해명
