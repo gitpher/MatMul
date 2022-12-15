@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MatMul.cpp" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="MatMul.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MatMul.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
