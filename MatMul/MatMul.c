@@ -191,7 +191,3 @@ void closeAllFiles(int numberOfFiles)
 	int numberOfFilesClosed = _fcloseall();
 	printf("*** %i OUT OF %i FILES CLOSED ***\n", numberOfFilesClosed, numberOfFiles);
 }
-
-
-
-
