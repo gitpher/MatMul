@@ -140,7 +140,7 @@ void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix resultMatrix)
 	printMatrix(&resultMatrix);
 }
 
-printMatrix(Matrix* matrix)
+void printMatrix(Matrix* matrix)
 {
 	char* name = matrix->name;
 	int row = matrix->row;

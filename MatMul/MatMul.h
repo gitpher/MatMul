@@ -22,6 +22,8 @@ bool isMatrixMultipliable(Matrix* matrix1, Matrix* matrix2);
 void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix resultMatrix);
 void printMatrix(Matrix* matrix);
 
+void closeAllFiles();
+
 
 // 나중에 2개 이상의 파일을 읽어들이지 않으면 에러 내는 것 추가
 // 나중에 bool isValidFiles() , bool isMatrixMultipliable() 추가
