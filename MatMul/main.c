@@ -4,6 +4,13 @@ int main(int argc, char* argv[])
 {
 	int numberOfFiles = argc - 1;
 	int numberToPrint = numberOfFiles + 1;
+
+	if (numberOfFiles < 2)
+	{
+		printf("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
+		return 1; // 나중에 할당 해제 추가
+	}
+
 	char** files = extractFiles(numberOfFiles, argv);
 	Matrix* matrixes = createMatrixes(numberOfFiles, files);
 	Matrix resultMatrix = multiplyMatrixes(numberOfFiles, matrixes);
