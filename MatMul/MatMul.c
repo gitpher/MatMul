@@ -4,8 +4,8 @@ void validateNumberOfFiles(int numberOfFiles)
 {
 	if (numberOfFiles < 2)
 	{
-		perror("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
-		exit("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
+		printf("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
+		exit(1);
 	}
 }
 
@@ -58,16 +58,17 @@ FILE** openFiles(int numberOfFiles, char** files)
 	{
 		FILE* fp = NULL;
 		fopen_s(&fp, files[i], "r");
+		validateFile(fp);
 		openedFiles[i] = fp;
 	}
 	return openedFiles;
 }
 
-void validateFiles(FILE* fp)
+void validateFile(FILE* fp)
 {
 	if (fp == NULL)
 	{
-		perror("ERROR: INVALID FILE(S) DETECTED (MAKE SURE ALL OF YOUR FILES ARE SAFE TO READ)");
+		printf("ERROR: INVALID FILE(S) DETECTED (MAKE SURE ALL OF YOUR FILES ARE SAFE TO READ)");
 		exit(1);
 	}
 }
@@ -136,6 +137,15 @@ bool isMatrixMultipliable(Matrix* matrixA, Matrix* matrixB)
 	else
 	{
 		return false; 
+	}
+}
+
+void validateResultMatrix(Matrix* resultMatrix)
+{
+	if (resultMatrix->row == 0 && resultMatrix->col == 0)
+	{
+		printf("ERROR: MATRIXES ARE NOT MULTIPLIABLE (YOU MIGHT WANT TO CHECK FILE %s)\n", resultMatrix->name);
+		exit(1);
 	}
 }
 

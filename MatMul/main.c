@@ -9,13 +9,7 @@ int main(int argc, char* argv[])
 	char** files = extractFiles(numberOfFiles, argv);
 	Matrix* matrixes = createMatrixes(numberOfFiles, files);
 	Matrix resultMatrix = multiplyMatrixes(numberOfFiles, matrixes);
-
-	if (resultMatrix.row == 0 && resultMatrix.col == 0)
-	{
-		printf("ERROR: MATRIXES ARE NOT MULTIPLIABLE (YOU MIGHT WANT TO CHECK FILE %s)\n", resultMatrix.name);
-		return 1; // 나중에 할당 해제 추가
-	}
-
+	validateResultMatrix(&resultMatrix);
 	printMatrixes(numberToPrint, matrixes, resultMatrix);
 
 	// TODO: free everything that is declared by malloc
