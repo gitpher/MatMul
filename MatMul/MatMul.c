@@ -1,5 +1,14 @@
 ﻿#include "MatMul.h"
 
+void validateNumberOfFiles(int numberOfFiles)
+{
+	if (numberOfFiles < 2)
+	{
+		perror("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
+		exit("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
+	}
+}
+
 char** extractFiles(int numberOfFiles, char** argv)
 {
 	char** files = (char**)malloc(_msize(argv) * numberOfFiles);
@@ -52,6 +61,15 @@ FILE** openFiles(int numberOfFiles, char** files)
 		openedFiles[i] = fp;
 	}
 	return openedFiles;
+}
+
+void validateFiles(FILE* fp)
+{
+	if (fp == NULL)
+	{
+		perror("ERROR: INVALID FILE(S) DETECTED (MAKE SURE ALL OF YOUR FILES ARE SAFE TO READ)");
+		exit(1);
+	}
 }
 
 Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)

@@ -13,9 +13,11 @@ typedef struct
 	int* arr;
 } Matrix;
 
+void validateNumberOfFiles(int numberOfFiles);
 char** extractFiles(int numberOfFiles, char** argv);
 Matrix* createMatrixes(int numberOfFiles, char** files);
 FILE** openFiles(int numberOfFiles, char** files);
+void validateFiles(FILE* fp);
 Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes);
 void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix);
 bool isMatrixMultipliable(Matrix* matrix1, Matrix* matrix2);
