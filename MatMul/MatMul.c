@@ -59,34 +59,40 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 	Matrix matrix;
 	for (int i = 0; i < numberOfFiles - 1; i++)
 	{
-		Matrix matrixA = matrixes[i];
+		Matrix matrixA;
+		if (i == 0)
+		{
+			matrixA = matrixes[i];
+		}
+		else
+		{
+			matrixA = matrix;
+		}
 		Matrix matrixB = matrixes[i + 1];
+
+		char* newName = matrixB.name;
+		int newRow = matrixA.row;
+		int newCol = matrixB.col;
+		int numberOfElements = newRow * newCol;
+		int* newArr = (int*)malloc(sizeof(int) * numberOfElements);
+
+		matrix.name = newName;
+		matrix.row = newRow;
+		matrix.col = newCol;
+		matrix.arr = newArr;
+		initializeMatrixArrToZero(numberOfElements, &matrix);
+
 		if (isMatrixMultipliable(&matrixA, &matrixB))
 		{
-			char* newName = matrixB.name;
-			int newRow = matrixA.row;
-			int newCol = matrixB.col;
-			int numberOfElements = newRow * newCol;
-			int* newArr = (int*)malloc(sizeof(int) * numberOfElements);
-
-			matrix.name = newName;
-			matrix.row = newRow;
-			matrix.col = newCol;
-			matrix.arr = newArr;
-
 			for (int m = 0; m < newRow; m++)
 			{
 				for (int n = 0; n < newCol; n++)
 				{
 					for (int k = 0; k < matrixA.col; k++)
 					{
-						// newCol 2 * 0 + 0
-						// newCol 2 * 0 + 1 
-						// newCol 
-
-						int indexOfMatrixA = matrixA.col * m + k;		 printf("indexOfMatrixA: %i\n", indexOfMatrixA); // 
-						int indexOfMatrixB = newCol * k + n;				printf("indexOfMatrixB: %i\n", indexOfMatrixB); // 
-						int indexOfNewMatrix = newCol * m + n;				printf("indexOfNewMatrix: %i\n", indexOfNewMatrix); // 
+						int indexOfMatrixA = matrixA.col * m + k;		
+						int indexOfMatrixB = matrixB.col * k + n;			
+						int indexOfNewMatrix = newCol * m + n;
 						matrix.arr[indexOfNewMatrix] += ((matrixA.arr[indexOfMatrixA]) * (matrixB.arr[indexOfMatrixB]));
 					}
 				}
@@ -94,7 +100,10 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 		}
 		else
 		{
-			return matrix; // 나중에 수정
+			matrix.row = 0;
+			matrix.col = 0;
+			initializeMatrixArrToZero(numberOfElements, &matrix);
+			return matrix;
 		}
 	}
 	return matrix;
@@ -112,8 +121,20 @@ bool isMatrixMultipliable(Matrix* matrixA, Matrix* matrixB)
 	}
 }
 
+void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix)
+{
+	for (int i = 0; i < numberOfElements; i++)
+	{
+		matrix->arr[i] = 0;
+	}
+}
+
 void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix resultMatrix)
 {
+	for (int i = 0; i < numberToPrint - 1; i++)
+	{
+		
+	}
 }
 
 

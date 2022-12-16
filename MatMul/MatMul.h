@@ -17,6 +17,7 @@ char** extractFiles(int numberOfFiles, char** argv);
 Matrix* createMatrixes(int numberOfFiles, char** files);
 FILE** openFiles(int numberOfFiles, char** files);
 Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes);
+void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix);
 bool isMatrixMultipliable(Matrix* matrix1, Matrix* matrix2);
 void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix resultMatrix);
 
