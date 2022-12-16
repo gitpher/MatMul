@@ -5,14 +5,19 @@ int main(int argc, char* argv[])
 	int numberOfFiles = argc - 1;
 	int numberToPrint = numberOfFiles + 1;
 
-	validateNumberOfFiles(numberOfFiles);
+	if (numberOfFiles < 2)
+	{
+		printf("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
+		return 1;
+	}
+
 	char** files = extractFiles(numberOfFiles, argv);
-	Matrix* matrixes = createMatrixes(numberOfFiles, files);
+	Matrix* matrixes = readMatrixes(numberOfFiles, files);
 	Matrix resultMatrix = multiplyMatrixes(numberOfFiles, matrixes);
 	validateResultMatrix(&resultMatrix);
 	printMatrixes(numberToPrint, matrixes, &resultMatrix);
-	
-	// TODO: free everything that is declared by malloc
-	// TODO: close all files
+
+	freeAllMatrixes(matrixes, &resultMatrix);
+	closeAllFiles(numberOfFiles);
 	return 0;
 }

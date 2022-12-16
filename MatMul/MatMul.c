@@ -1,14 +1,5 @@
 ﻿#include "MatMul.h"
 
-void validateNumberOfFiles(int numberOfFiles)
-{
-	if (numberOfFiles < 2)
-	{
-		printf("ERROR: NOT ENOUGH INPUT FILES (YOU NEED TO GIVE AT LEAST 2 OR MORE FILES)\n");
-		exit(1);
-	}
-}
-
 char** extractFiles(int numberOfFiles, char** argv)
 {
 	char** files = (char**)malloc(_msize(argv) * numberOfFiles);
@@ -19,7 +10,7 @@ char** extractFiles(int numberOfFiles, char** argv)
 	return files;
 }
 
-Matrix* createMatrixes(int numberOfFiles, char** files)
+Matrix* readMatrixes(int numberOfFiles, char** files)
 {	
 	FILE** openedFiles = openFiles(numberOfFiles, files);
 	Matrix* matrixes = (Matrix*)malloc(sizeof(Matrix)*numberOfFiles);
@@ -58,18 +49,28 @@ FILE** openFiles(int numberOfFiles, char** files)
 	{
 		FILE* fp = NULL;
 		fopen_s(&fp, files[i], "r");
-		validateFile(fp);
-		openedFiles[i] = fp;
+		if (isValidFile(fp))
+		{
+			openedFiles[i] = fp;
+		}
+		else
+		{
+			printf("ERROR: INVALID FILE(S) DETECTED (MAKE SURE ALL OF YOUR FILES ARE SAFE TO READ)");
+			exit(1);
+		}
 	}
 	return openedFiles;
 }
 
-void validateFile(FILE* fp)
+bool isValidFile(FILE* fp)
 {
 	if (fp == NULL)
 	{
-		printf("ERROR: INVALID FILE(S) DETECTED (MAKE SURE ALL OF YOUR FILES ARE SAFE TO READ)");
-		exit(1);
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }
 
@@ -98,7 +99,7 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 		matrix.name = newName;
 		matrix.row = newRow;
 		matrix.col = newCol;
-		matrix.arr = newArr;
+		matrix.arr = newArr; 
 		initializeMatrixArrToZero(numberOfElements, &matrix);
 
 		if (isMatrixMultipliable(&matrixA, &matrixB))
@@ -189,16 +190,19 @@ void printMatrix(Matrix* matrix)
 
 void freeAllMatrixes(Matrix* matrixes, Matrix* resultMatrix)
 {
-	int numberOfMatrixes = _msize(matrixes);
+	int numberOfMatrixes = _msize(matrixes) / sizeof(matrixes[0]);
 	for (int i = 0; i < numberOfMatrixes; i++)
 	{
 		free(matrixes[i].arr);
-		free(matrixes);
 	}
+	free(resultMatrix->arr);
+	free(matrixes);
 }
 
-void closeAllFiles()
+void closeAllFiles(int numberOfFiles)
 {
+	int numberOfFilesClosed = _fcloseall();
+	printf("\n*** %i OUT OF %i FILES CLOSED ***\n", numberOfFilesClosed, numberOfFiles);
 }
 
 
