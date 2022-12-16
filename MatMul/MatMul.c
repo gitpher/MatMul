@@ -1,31 +1,16 @@
 ﻿#include "MatMul.h"
 
-char** extractFiles(int numberOfFiles, char** argv)
-{
-	char** files = (char**)malloc(_msize(argv) * numberOfFiles);
-	for (int i = 0; i < numberOfFiles; i++)
-	{
-		files[i] = argv[i + 1];
-	}
-	return files;
-}
-
-Matrix* readMatrixes(int numberOfFiles, char** files, FILE** openedFiles)
+Matrix* readMatrixes(int numberOfFiles, char** fileNames, FILE** openedFiles)
 {	
 	Matrix* matrixes = (Matrix*)malloc(sizeof(Matrix)*numberOfFiles);
 	for (int m = 0; m < numberOfFiles; m++)
 	{
-		char* file = files[m];
-		FILE* openFile = openedFiles[m];
-		Matrix matrix = matrixes[m];
-
-		Matrix readedMatrix = readMatrix(file, openFile, &matrix);
-		matrixes[m] = readedMatrix;
+		matrixes[m] = readMatrix(fileNames[m], openedFiles[m]);
 	}
 	return matrixes;
 }
 
-Matrix readMatrix(char* file, FILE* openedFile, Matrix* matrix)
+Matrix readMatrix(char* fileName, FILE* openedFile)
 {
 	char buf[512] = { 0 };
 	fgets(buf, sizeof(buf), openedFile);
@@ -44,21 +29,21 @@ Matrix readMatrix(char* file, FILE* openedFile, Matrix* matrix)
 		{
 			int k = col * i + j;
 			arr[k] = atoi(token);
-			token = strtok_s(NULL, " ", &rest);
+			token = strtok_s(NULL, " ", &rest); // 
 		}
 	}
-	Matrix readedMatrix = { file, row, col, arr };
+	Matrix readedMatrix = { fileName , row, col, arr };
 	return readedMatrix;
 }
 
-FILE** openFiles(int numberOfFiles, char** files)
+FILE** openFiles(int numberOfFiles, char** fileNames)
 {
 	FILE** openedFiles = (FILE**)malloc(sizeof(FILE*) * numberOfFiles);
 	for (int i = 0; i < numberOfFiles; i++)
 	{
 		FILE* fp = NULL;
-		fopen_s(&fp, files[i], "r");
-		if (isValidFile(fp))
+		fopen_s(&fp, fileNames[i], "r");
+		if (isValidFile(fp)) 
 		{
 			openedFiles[i] = fp;
 		}
@@ -98,21 +83,16 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 		}
 		Matrix matrixB = matrixes[i + 1];
 
-		char* newName = matrixB.name;
-		int newRow = matrixA.row;
-		int newCol = matrixB.col;
-		int numberOfElements = newRow * newCol;
-		int* newArr = (int*)malloc(sizeof(int) * numberOfElements);
-
-		matrixAB.name = newName;
-		matrixAB.row = newRow;
-		matrixAB.col = newCol;
-		matrixAB.arr = newArr; 
+		matrixAB.name = matrixB.name;
+		matrixAB.row = matrixA.row;
+		matrixAB.col = matrixB.col;
+		int numberOfElements = matrixAB.row * matrixAB.col;
+		matrixAB.arr = (int*)malloc(sizeof(int) * numberOfElements);
 		initializeMatrixArrToZero(numberOfElements, &matrixAB);
 
 		if (isMatrixMultipliable(&matrixA, &matrixB))
 		{
-			multiplyMatrix(&matrixA, &matrixB, &matrixAB);
+			multiplyMatrix(&matrixAB, &matrixA, &matrixB);
 		}
 		else
 		{
@@ -125,7 +105,7 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 	return matrixAB;
 }
 
-void multiplyMatrix(Matrix* matrixA, Matrix* matrixB, Matrix* matrixAB)
+void multiplyMatrix(Matrix* matrixAB, Matrix* matrixA, Matrix* matrixB)
 {
 	int newRow = matrixA->row;
 	int newCol = matrixB->col;

@@ -13,13 +13,12 @@ typedef struct
 	int* arr;
 } Matrix;
 
-char** extractFiles(int numberOfFiles, char** argv);
 Matrix* readMatrixes(int numberOfFiles, char** files, FILE** openedFiles);
-Matrix readMatrix(char* file, FILE* openedFile, Matrix* matrix);
+Matrix readMatrix(char* file, FILE* openedFile);
 FILE** openFiles(int numberOfFiles, char** files);
 bool isValidFile(FILE* fp);
 Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes);
-void multiplyMatrix(Matrix* matrixA, Matrix* matrixB, Matrix* matrixAB);
+void multiplyMatrix(Matrix* matrixAB, Matrix* matrixA, Matrix* matrixB);
 void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix);
 bool isMatrixMultipliable(Matrix* matrix1, Matrix* matrix2);
 void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix* resultMatrix);
