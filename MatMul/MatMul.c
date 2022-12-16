@@ -84,7 +84,7 @@ bool isValidFile(FILE* fp)
 
 Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 {
-	Matrix matrix;
+	Matrix matrixAB;
 	for (int i = 0; i < numberOfFiles - 1; i++)
 	{
 		Matrix matrixA;
@@ -94,7 +94,7 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 		}
 		else
 		{
-			matrixA = matrix;
+			matrixA = matrixAB;
 		}
 		Matrix matrixB = matrixes[i + 1];
 
@@ -104,37 +104,45 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 		int numberOfElements = newRow * newCol;
 		int* newArr = (int*)malloc(sizeof(int) * numberOfElements);
 
-		matrix.name = newName;
-		matrix.row = newRow;
-		matrix.col = newCol;
-		matrix.arr = newArr; 
-		initializeMatrixArrToZero(numberOfElements, &matrix);
+		matrixAB.name = newName;
+		matrixAB.row = newRow;
+		matrixAB.col = newCol;
+		matrixAB.arr = newArr; 
+		initializeMatrixArrToZero(numberOfElements, &matrixAB);
 
 		if (isMatrixMultipliable(&matrixA, &matrixB))
 		{
-			for (int m = 0; m < newRow; m++)
-			{
-				for (int n = 0; n < newCol; n++)
-				{
-					for (int k = 0; k < matrixA.col; k++)
-					{
-						int indexOfMatrixA = matrixA.col * m + k;		
-						int indexOfMatrixB = matrixB.col * k + n;			
-						int indexOfNewMatrix = newCol * m + n;
-						matrix.arr[indexOfNewMatrix] += ((matrixA.arr[indexOfMatrixA]) * (matrixB.arr[indexOfMatrixB]));
-					}
-				}
-			}
+			multiplyMatrix(&matrixA, &matrixB, &matrixAB);
 		}
 		else
 		{
-			matrix.row = 0;
-			matrix.col = 0;
-			initializeMatrixArrToZero(numberOfElements, &matrix);
-			return matrix;
+			matrixAB.row = 0;
+			matrixAB.col = 0;
+			initializeMatrixArrToZero(numberOfElements, &matrixAB);
+			return matrixAB;
 		}
 	}
-	return matrix;
+	return matrixAB;
+}
+
+void multiplyMatrix(Matrix* matrixA, Matrix* matrixB, Matrix* matrixAB)
+{
+	int newRow = matrixA->row;
+	int newCol = matrixB->col;
+
+	for (int m = 0; m < newRow; m++)
+	{
+		for (int n = 0; n < newCol; n++)
+		{
+			for (int k = 0; k < matrixA->col; k++)
+			{
+				int indexOfMatrixA = matrixA->col * m + k;
+				int indexOfMatrixB = matrixB->col * k + n;
+				int indexOfMatrixAB = newCol * m + n;
+				matrixAB->arr[indexOfMatrixAB] += ((matrixA->arr[indexOfMatrixA]) * (matrixB->arr[indexOfMatrixB]));
+			}
+		}
+	}
 }
 
 bool isMatrixMultipliable(Matrix* matrixA, Matrix* matrixB)
@@ -201,7 +209,7 @@ void freeAllMatrixes(Matrix* matrixes, Matrix* resultMatrix)
 void closeAllFiles(int numberOfFiles)
 {
 	int numberOfFilesClosed = _fcloseall();
-	printf("\n*** %i OUT OF %i FILES CLOSED ***\n", numberOfFilesClosed, numberOfFiles);
+	printf("*** %i OUT OF %i FILES CLOSED ***\n", numberOfFilesClosed, numberOfFiles);
 }
 
 

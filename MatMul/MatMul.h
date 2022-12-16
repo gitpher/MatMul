@@ -19,9 +19,7 @@ Matrix readMatrix(char* file, FILE* openedFile, Matrix* matrix);
 FILE** openFiles(int numberOfFiles, char** files);
 bool isValidFile(FILE* fp);
 Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes);
-
-// multiplyMatrix();
-
+void multiplyMatrix(Matrix* matrixA, Matrix* matrixB, Matrix* matrixAB);
 void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix);
 bool isMatrixMultipliable(Matrix* matrix1, Matrix* matrix2);
 void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix* resultMatrix);
