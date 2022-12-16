@@ -10,36 +10,45 @@ char** extractFiles(int numberOfFiles, char** argv)
 	return files;
 }
 
-Matrix* readMatrixes(int numberOfFiles, char** files)
+Matrix* readMatrixes(int numberOfFiles, char** files, FILE** openedFiles)
 {	
-	FILE** openedFiles = openFiles(numberOfFiles, files);
 	Matrix* matrixes = (Matrix*)malloc(sizeof(Matrix)*numberOfFiles);
 	for (int m = 0; m < numberOfFiles; m++)
 	{
-		char buf[512] = { 0 };
-		fgets(buf, sizeof(buf), openedFiles[m]);
-		char* rest = NULL;
-		char* token = strtok_s(buf, " ", &rest);
-		int col = atoi(rest); 
-		int row = atoi(token); 
-		int numberOfElements = col * row;  
-		int* arr = (int*)malloc(sizeof(int) * numberOfElements);
-		for (int i = 0; i < row; i++) 
-		{
-			fgets(buf, sizeof(buf), openedFiles[m]);
-			char* rest = NULL;
-			char* token = strtok_s(buf, " ", &rest);
-			for (int j = 0; j < col; j++) 
-			{
-				int k = col * i + j;
-				arr[k] = atoi(token);
-				token = strtok_s(NULL, " ", &rest);
-			}
-		}
-		Matrix matrix = { files[m], row, col, arr }; 
-		matrixes[m] = matrix;
+		char* file = files[m];
+		FILE* openFile = openedFiles[m];
+		Matrix matrix = matrixes[m];
+
+		Matrix readedMatrix = readMatrix(file, openFile, &matrix);
+		matrixes[m] = readedMatrix;
 	}
 	return matrixes;
+}
+
+Matrix readMatrix(char* file, FILE* openedFile, Matrix* matrix)
+{
+	char buf[512] = { 0 };
+	fgets(buf, sizeof(buf), openedFile);
+	char* rest = NULL;
+	char* token = strtok_s(buf, " ", &rest);
+	int col = atoi(rest);
+	int row = atoi(token);
+	int numberOfElements = col * row;
+	int* arr = (int*)malloc(sizeof(int) * numberOfElements);
+	for (int i = 0; i < row; i++)
+	{
+		fgets(buf, sizeof(buf), openedFile);
+		char* rest = NULL;
+		char* token = strtok_s(buf, " ", &rest);
+		for (int j = 0; j < col; j++)
+		{
+			int k = col * i + j;
+			arr[k] = atoi(token);
+			token = strtok_s(NULL, " ", &rest);
+		}
+	}
+	Matrix readedMatrix = { file, row, col, arr };
+	return readedMatrix;
 }
 
 FILE** openFiles(int numberOfFiles, char** files)
@@ -55,8 +64,7 @@ FILE** openFiles(int numberOfFiles, char** files)
 		}
 		else
 		{
-			printf("ERROR: INVALID FILE(S) DETECTED (MAKE SURE ALL OF YOUR FILES ARE SAFE TO READ)");
-			exit(1);
+			return NULL;
 		}
 	}
 	return openedFiles;
@@ -138,15 +146,6 @@ bool isMatrixMultipliable(Matrix* matrixA, Matrix* matrixB)
 	else
 	{
 		return false; 
-	}
-}
-
-void validateResultMatrix(Matrix* resultMatrix)
-{
-	if (resultMatrix->row == 0 && resultMatrix->col == 0)
-	{
-		printf("ERROR: MATRIXES ARE NOT MULTIPLIABLE (YOU MIGHT WANT TO CHECK FILE %s)\n", resultMatrix->name);
-		exit(1);
 	}
 }
 

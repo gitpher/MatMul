@@ -12,9 +12,26 @@ int main(int argc, char* argv[])
 	}
 
 	char** files = extractFiles(numberOfFiles, argv);
-	Matrix* matrixes = readMatrixes(numberOfFiles, files);
+	FILE** openedFiles = openFiles(numberOfFiles, files);
+
+	if (openedFiles == NULL)
+	{
+		printf("ERROR: INVALID FILE(S) DETECTED (MAKE SURE ALL OF YOUR FILES ARE SAFE TO READ)");
+		closeAllFiles(numberOfFiles);
+		return 1;
+	}
+
+	Matrix* matrixes = readMatrixes(numberOfFiles, files, openedFiles);
 	Matrix resultMatrix = multiplyMatrixes(numberOfFiles, matrixes);
-	validateResultMatrix(&resultMatrix);
+	
+	if (resultMatrix.row == 0 && resultMatrix.col == 0)
+	{
+		printf("ERROR: MATRIXES ARE NOT MULTIPLIABLE (YOU MIGHT WANT TO CHECK FILE %s)\n", resultMatrix.name);
+		freeAllMatrixes(matrixes, &resultMatrix);
+		closeAllFiles(numberOfFiles);
+		return 1;
+	}
+
 	printMatrixes(numberToPrint, matrixes, &resultMatrix);
 
 	freeAllMatrixes(matrixes, &resultMatrix);
