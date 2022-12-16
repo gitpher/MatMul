@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 	Matrix resultMatrix = multiplyMatrixes(numberOfFiles, matrixes);
 	validateResultMatrix(&resultMatrix);
 	printMatrixes(numberToPrint, matrixes, &resultMatrix);
-
+	
 	// TODO: free everything that is declared by malloc
 	// TODO: close all files
 	return 0;

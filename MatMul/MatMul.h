@@ -25,6 +25,7 @@ void validateResultMatrix(Matrix* resultMatrix);
 void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix* resultMatrix);
 void printMatrix(Matrix* matrix);
 
+void freeAllMatrixes(Matrix* matrixes, Matrix* resultMatrix);
 void closeAllFiles();
 
 

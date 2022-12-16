@@ -187,6 +187,20 @@ void printMatrix(Matrix* matrix)
 	}
 }
 
+void freeAllMatrixes(Matrix* matrixes, Matrix* resultMatrix)
+{
+	int numberOfMatrixes = _msize(matrixes);
+	for (int i = 0; i < numberOfMatrixes; i++)
+	{
+		free(matrixes[i].arr);
+		free(matrixes);
+	}
+}
+
+void closeAllFiles()
+{
+}
+
 
 
 
