@@ -157,15 +157,15 @@ void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix)
 	}
 }
 
-void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix resultMatrix)
+void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix* resultMatrix)
 {
 	for (int i = 0; i < numberToPrint-1; i++)
 	{
 		Matrix matrix = matrixes[i];
 		printMatrix(&matrix);
 	}
-	resultMatrix.name = "result";
-	printMatrix(&resultMatrix);
+	resultMatrix->name = "result";
+	printMatrix(resultMatrix);
 }
 
 void printMatrix(Matrix* matrix)
