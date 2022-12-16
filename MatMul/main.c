@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 	if (resultMatrix.row == 0 && resultMatrix.col == 0)
 	{
 		printf("ERROR: MATRIXES ARE NOT MULTIPLIABLE (YOU MIGHT WANT TO CHECK FILE %s)\n", resultMatrix.name);
+		return 1;
 	}
 
 	// 확인용

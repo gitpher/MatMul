@@ -131,12 +131,33 @@ void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix)
 
 void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix resultMatrix)
 {
-	for (int i = 0; i < numberToPrint - 1; i++)
+	for (int i = 0; i < numberToPrint-1; i++)
 	{
-		
+		Matrix matrix = matrixes[i];
+		printMatrix(&matrix);
 	}
+	resultMatrix.name = "result";
+	printMatrix(&resultMatrix);
 }
 
+printMatrix(Matrix* matrix)
+{
+	char* name = matrix->name;
+	int row = matrix->row;
+	int col = matrix->col;
+	int* arr = matrix->arr;
+
+	printf("%s = \n", name);
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < col; j++)
+		{
+			int k = col * i + j;
+			printf("%i ", arr[k]);
+		}
+		printf("\n");
+	}
+}
 
 
 
