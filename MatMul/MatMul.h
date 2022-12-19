@@ -22,7 +22,7 @@ bool isValidFile(const FILE* const fp);
 Matrix multiplyMatrixes(const int numberOfFiles, const Matrix* const matrixes);
 void multiplyMatrix(Matrix* const matrixAB, const Matrix* const matrixA, const Matrix* const matrixB);
 void initializeMatrixArrToZero(const int numberOfElements, Matrix* const matrix);
-bool isMatrixMultipliable(const Matrix* const matrix1, const Matrix* const matrix2);
+bool isMatrixMultipliable(const Matrix* const matrixA, const Matrix* const matrixB);
 void printMatrixes(const int numberToPrint, const Matrix* const matrixes, Matrix* const resultMatrix);
 void printMatrix(const Matrix* const matrix);
 void freeAllMatrixes(const Matrix* const matrixes, const Matrix* const resultMatrix);
