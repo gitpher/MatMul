@@ -1,6 +1,6 @@
 ﻿#include "MatMul.h"
 
-Matrix* readMatrixes(int numberOfFiles, char** fileNames, FILE** openedFiles)
+Matrix* readMatrixes(const int numberOfFiles, const char** const fileNames, const FILE** const openedFiles)
 {	
 	Matrix* matrixes = (Matrix*)malloc(sizeof(Matrix)*numberOfFiles);
 	for (int m = 0; m < numberOfFiles; m++)
@@ -10,7 +10,7 @@ Matrix* readMatrixes(int numberOfFiles, char** fileNames, FILE** openedFiles)
 	return matrixes;
 }
 
-Matrix readMatrix(char* fileName, FILE* openedFile)
+Matrix readMatrix(const char* const fileName, const FILE* const openedFile)
 {
 	char buf[512] = { 0 };
 	fgets(buf, sizeof(buf), openedFile);
@@ -36,7 +36,7 @@ Matrix readMatrix(char* fileName, FILE* openedFile)
 	return readedMatrix;
 }
 
-FILE** openFiles(int numberOfFiles, char** fileNames)
+FILE** openFiles(const int numberOfFiles, const char** const fileNames)
 {
 	FILE** openedFiles = (FILE**)malloc(sizeof(FILE*) * numberOfFiles);
 	for (int i = 0; i < numberOfFiles; i++)
@@ -55,7 +55,7 @@ FILE** openFiles(int numberOfFiles, char** fileNames)
 	return openedFiles;
 }
 
-bool isValidFile(FILE* fp)
+bool isValidFile(const FILE* const fp)
 {
 	if (fp == NULL)
 	{
@@ -67,7 +67,7 @@ bool isValidFile(FILE* fp)
 	}
 }
 
-Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
+Matrix multiplyMatrixes(const int numberOfFiles, const Matrix* const matrixes)
 {
 	Matrix matrixAB;
 	for (int i = 0; i < numberOfFiles - 1; i++)
@@ -105,7 +105,7 @@ Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes)
 	return matrixAB;
 }
 
-void multiplyMatrix(Matrix* matrixAB, Matrix* matrixA, Matrix* matrixB)
+void multiplyMatrix(Matrix* const matrixAB, const Matrix* const matrixA, const Matrix* const matrixB)
 {
 	int newRow = matrixA->row;
 	int newCol = matrixB->col;
@@ -125,7 +125,7 @@ void multiplyMatrix(Matrix* matrixAB, Matrix* matrixA, Matrix* matrixB)
 	}
 }
 
-bool isMatrixMultipliable(Matrix* matrixA, Matrix* matrixB)
+bool isMatrixMultipliable(const Matrix* const matrixA, const Matrix* const matrixB)
 {
 	if (matrixA->col == matrixB->row)
 	{
@@ -137,7 +137,7 @@ bool isMatrixMultipliable(Matrix* matrixA, Matrix* matrixB)
 	}
 }
 
-void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix)
+void initializeMatrixArrToZero(const int numberOfElements, Matrix* const matrix)
 {
 	for (int i = 0; i < numberOfElements; i++)
 	{
@@ -145,7 +145,7 @@ void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix)
 	}
 }
 
-void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix* resultMatrix)
+void printMatrixes(const int numberToPrint, const Matrix* const matrixes, Matrix* const resultMatrix)
 {
 	for (int i = 0; i < numberToPrint-1; i++)
 	{
@@ -156,7 +156,7 @@ void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix* resultMatrix)
 	printMatrix(resultMatrix);
 }
 
-void printMatrix(Matrix* matrix)
+void printMatrix(const Matrix* const matrix)
 {
 	char* name = matrix->name;
 	int row = matrix->row;
@@ -175,7 +175,7 @@ void printMatrix(Matrix* matrix)
 	}
 }
 
-void freeAllMatrixes(Matrix* matrixes, Matrix* resultMatrix)
+void freeAllMatrixes(const Matrix* const matrixes, const Matrix* const resultMatrix)
 {
 	int numberOfMatrixes = _msize(matrixes) / sizeof(matrixes[0]);
 	for (int i = 0; i < numberOfMatrixes; i++)
@@ -186,7 +186,7 @@ void freeAllMatrixes(Matrix* matrixes, Matrix* resultMatrix)
 	free(matrixes);
 }
 
-void closeAllFiles(int numberOfFiles)
+void closeAllFiles(const int numberOfFiles)
 {
 	int numberOfFilesClosed = _fcloseall();
 	printf("*** %i OUT OF %i FILES CLOSED ***\n", numberOfFilesClosed, numberOfFiles);

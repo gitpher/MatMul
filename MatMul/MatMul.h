@@ -13,15 +13,15 @@ typedef struct
 	int* arr;
 } Matrix;
 
-Matrix* readMatrixes(int numberOfFiles, char** files, FILE** openedFiles);
-Matrix readMatrix(char* file, FILE* openedFile);
-FILE** openFiles(int numberOfFiles, char** files);
-bool isValidFile(FILE* fp);
-Matrix multiplyMatrixes(int numberOfFiles, Matrix* matrixes);
-void multiplyMatrix(Matrix* matrixAB, Matrix* matrixA, Matrix* matrixB);
-void initializeMatrixArrToZero(int numberOfElements, Matrix* matrix);
-bool isMatrixMultipliable(Matrix* matrix1, Matrix* matrix2);
-void printMatrixes(int numberToPrint, Matrix* matrixes, Matrix* resultMatrix);
-void printMatrix(Matrix* matrix);
-void freeAllMatrixes(Matrix* matrixes, Matrix* resultMatrix);
-void closeAllFiles(int numberOfFiles);
+Matrix* readMatrixes(const int numberOfFiles, const char** const files, const FILE** const openedFiles);
+Matrix readMatrix(const char* const file, const FILE* const openedFile);
+FILE** openFiles(const int numberOfFiles, const char** const files);
+bool isValidFile(const FILE* const fp);
+Matrix multiplyMatrixes(const int numberOfFiles, const Matrix* const matrixes);
+void multiplyMatrix(Matrix* const matrixAB, const Matrix* const matrixA, const Matrix* const matrixB);
+void initializeMatrixArrToZero(const int numberOfElements, Matrix* const matrix);
+bool isMatrixMultipliable(const Matrix* const matrix1, const Matrix* const matrix2);
+void printMatrixes(const int numberToPrint, const Matrix* const matrixes, Matrix* const resultMatrix);
+void printMatrix(const Matrix* const matrix);
+void freeAllMatrixes(const Matrix* const matrixes, const Matrix* const resultMatrix);
+void closeAllFiles(const int numberOfFiles);

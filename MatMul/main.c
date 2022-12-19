@@ -2,9 +2,9 @@
 
 int main(int argc, char* argv[])
 {
-	int numberOfFiles = argc - 1;
-	char** fileNames = &argv[1];
-	int numberToPrint = numberOfFiles + 1;
+	const int numberOfFiles = argc - 1;
+	const char** const fileNames = &argv[1];
+	const int numberToPrint = numberOfFiles + 1;
 
 	if (numberOfFiles < 2)
 	{
