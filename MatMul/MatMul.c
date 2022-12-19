@@ -12,7 +12,7 @@ Matrix* readMatrixes(const int numberOfFiles, const char** const fileNames, cons
 
 Matrix readMatrix(const char* const fileName, const FILE* const openedFile)
 {
-	char buf[512] = { 0 };
+	char buf[BUFFERLENGTH] = { 0 };
 	fgets(buf, sizeof(buf), openedFile);
 	char* rest = NULL;
 	char* token = strtok_s(buf, " ", &rest);

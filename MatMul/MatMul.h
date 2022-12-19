@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+#define BUFFERLENGTH 512
+
 typedef struct
 {
 	char* name;
