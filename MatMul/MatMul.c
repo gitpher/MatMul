@@ -29,7 +29,7 @@ Matrix readMatrix(const char* const fileName, const FILE* const openedFile)
 		{
 			int k = col * i + j;
 			arr[k] = atoi(token);
-			token = strtok_s(NULL, " ", &rest); // 
+			token = strtok_s(NULL, " ", &rest);
 		}
 	}
 	Matrix readedMatrix = { fileName , row, col, arr };
